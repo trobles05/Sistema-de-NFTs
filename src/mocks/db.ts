@@ -1,8 +1,8 @@
 import type { Cotacao, Nft, Pedido } from '@/types'
-import { armazenamentoPadrao, type Armazenamento } from './armazenamento'
+import { armazenamentoPadrao, type Armazenamento } from '@/lib/armazenamento'
 import { criarNfts, criarUsuarios, type UsuarioFixture } from './fixtures'
 
-export { criarArmazenamentoMemoria, type Armazenamento } from './armazenamento'
+export { criarArmazenamentoMemoria, type Armazenamento } from '@/lib/armazenamento'
 
 /** Mudar o formato do estado exige subir esta versão: dados salvos de outra versão voltam às fixtures. */
 export const VERSAO_ESQUEMA = 1

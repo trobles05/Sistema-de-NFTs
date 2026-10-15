@@ -1,7 +1,7 @@
 import { getResponse, http, HttpResponse } from 'msw'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ErroApiSchema } from '@/types'
-import { criarArmazenamentoMemoria, type Armazenamento } from '../armazenamento'
+import { criarArmazenamentoMemoria, type Armazenamento } from '@/lib/armazenamento'
 import { CENARIOS, CHAVE_CENARIO, criarEstadoCenario, criarHandlerRede, NOMES_CENARIO, type EstadoCenario } from '.'
 
 let armazenamento: Armazenamento
