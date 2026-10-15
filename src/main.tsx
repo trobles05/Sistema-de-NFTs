@@ -19,10 +19,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </StrictMode>,
-)
+async function iniciar() {
+  // Com VITE_API_MOCKS diferente de "true", o código dos mocks nem entra no bundle.
+  if (import.meta.env.VITE_API_MOCKS === 'true') {
+    const { iniciarMocks } = await import('@/mocks/iniciar')
+    await iniciarMocks()
+  }
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+}
+
+void iniciar()
