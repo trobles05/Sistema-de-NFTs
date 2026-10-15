@@ -1,5 +1,8 @@
 import type { Cotacao, Nft, Pedido } from '@/types'
+import { armazenamentoPadrao, type Armazenamento } from './armazenamento'
 import { criarNfts, criarUsuarios, type UsuarioFixture } from './fixtures'
+
+export { criarArmazenamentoMemoria, type Armazenamento } from './armazenamento'
 
 /** Mudar o formato do estado exige subir esta versão: dados salvos de outra versão voltam às fixtures. */
 export const VERSAO_ESQUEMA = 1
@@ -48,30 +51,6 @@ export interface EstadoBanco {
 
 /** NFT ou pedido cuja `versao` mudou numa alteração (base dos eventos nft.updated/order.updated). */
 export type Mudanca = { recurso: 'nft'; id: string } | { recurso: 'pedido'; id: string }
-
-export interface Armazenamento {
-  getItem(chave: string): string | null
-  setItem(chave: string, valor: string): void
-  removeItem(chave: string): void
-}
-
-export function criarArmazenamentoMemoria(): Armazenamento {
-  const dados = new Map<string, string>()
-  return {
-    getItem: (chave) => dados.get(chave) ?? null,
-    setItem: (chave, valor) => void dados.set(chave, valor),
-    removeItem: (chave) => void dados.delete(chave),
-  }
-}
-
-function armazenamentoPadrao(): Armazenamento {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) return window.localStorage
-  } catch {
-    // localStorage bloqueado (modo privado, política do navegador): segue só em memória.
-  }
-  return criarArmazenamentoMemoria()
-}
 
 function estadoInicial(revisao: number): EstadoBanco {
   return {
