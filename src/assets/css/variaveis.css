@@ -1,0 +1,43 @@
+/* Identidade Kurio — valores extraídos das variáveis do Figma (Seletiva vaga) */
+:root {
+  /* Fundos e superfícies */
+  --cor-fundo: #140d0a;
+  --cor-superficie: #241612;
+  --cor-superficie-escura: #38220f;
+  --cor-fundo-claro: #fbfbfb;
+
+  /* Bordas */
+  --cor-borda: #3f2319;
+  --cor-borda-suave: #55321f;
+
+  /* Marca */
+  --cor-primaria: #d28a4c;
+  --cor-destaque: #e89b55;
+
+  /* Texto */
+  --cor-texto: #f5f1eb;
+  --cor-texto-primario: #f7f3ec;
+  --cor-texto-secundario: #cfb28c;
+  --cor-texto-terciario: #b39463;
+
+  /* Fonte */
+  --fonte: "Roboto Mono", ui-monospace, monospace;
+
+  /* Pesos de Fonte */
+  --regular: 400;
+  --medium: 500;
+  --bold: 700;
+
+  /* Tamanhos de Fonte (estilos do Figma) */
+  --f9: 0.5625rem;
+  --f10: 0.625rem;
+  --f12: 0.75rem;
+  --f13: 0.8125rem;
+  --f14: 0.875rem;
+  --f15: 0.9375rem;
+  --f16: 1rem;
+  --f17: 1.0625rem;
+  --f18: 1.125rem;
+  --f24: 1.5rem;
+  --f43: clamp(1.75rem, 1rem + 2.5vw, 2.6875rem);
+}

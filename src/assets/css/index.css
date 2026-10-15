@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./variaveis.css";
+@import "./fontes.css";
+@import "./padroes.css";
+
+/* Ponte: variáveis Kurio → utilitários Tailwind (bg-fundo, text-destaque, text-f14…) */
+@theme inline {
+  --font-mono: var(--fonte);
+  --font-sans: var(--fonte);
+
+  --color-fundo: var(--cor-fundo);
+  --color-superficie: var(--cor-superficie);
+  --color-superficie-escura: var(--cor-superficie-escura);
+  --color-fundo-claro: var(--cor-fundo-claro);
+  --color-borda: var(--cor-borda);
+  --color-borda-suave: var(--cor-borda-suave);
+  --color-primaria: var(--cor-primaria);
+  --color-destaque: var(--cor-destaque);
+  --color-texto: var(--cor-texto);
+  --color-texto-primario: var(--cor-texto-primario);
+  --color-texto-secundario: var(--cor-texto-secundario);
+  --color-texto-terciario: var(--cor-texto-terciario);
+
+  /* Nomes semânticos esperados pelos componentes shadcn/ui */
+  --color-background: var(--cor-fundo);
+  --color-foreground: var(--cor-texto);
+  --color-card: var(--cor-superficie);
+  --color-card-foreground: var(--cor-texto);
+  --color-popover: var(--cor-superficie);
+  --color-popover-foreground: var(--cor-texto);
+  --color-primary: var(--cor-primaria);
+  --color-primary-foreground: var(--cor-fundo);
+  --color-secondary: var(--cor-superficie-escura);
+  --color-secondary-foreground: var(--cor-texto);
+  --color-muted: var(--cor-superficie);
+  --color-muted-foreground: var(--cor-texto-secundario);
+  --color-accent: var(--cor-superficie-escura);
+  --color-accent-foreground: var(--cor-destaque);
+  --color-border: var(--cor-borda);
+  --color-input: var(--cor-borda);
+  --color-ring: var(--cor-destaque);
+
+  --text-f9: var(--f9);
+  --text-f10: var(--f10);
+  --text-f12: var(--f12);
+  --text-f13: var(--f13);
+  --text-f14: var(--f14);
+  --text-f15: var(--f15);
+  --text-f16: var(--f16);
+  --text-f17: var(--f17);
+  --text-f18: var(--f18);
+  --text-f24: var(--f24);
+  --text-f43: var(--f43);
+
+  --font-weight-regular: var(--regular);
+  --font-weight-medium: var(--medium);
+  --font-weight-bold: var(--bold);
+}
