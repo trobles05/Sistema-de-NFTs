@@ -1,6 +1,6 @@
 import type { CodigoErro } from '@/types'
 import { criarSorteio } from '../aleatorio'
-import { armazenamentoPadrao, type Armazenamento } from '../armazenamento'
+import { armazenamentoPadrao, type Armazenamento } from '@/lib/armazenamento'
 import { CENARIOS, ehNomeCenario, type Cenario, type RegraRede } from './cenarios'
 
 export const CHAVE_CENARIO = 'kurio:mock-cenario'
