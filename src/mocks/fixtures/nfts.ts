@@ -1,5 +1,6 @@
 import type { Categoria, Edicao, ImagemNft, Nft, Rede, RotuloEdicao } from '@/types'
 import { multiplicarEth, somarEth, type EthString } from '@/utils/eth'
+import { criarSorteio, type Sorteio } from '../aleatorio'
 
 /** Data de referência dos lançamentos: os dados não dependem do relógio de quem roda. */
 const DATA_BASE = Date.parse('2026-10-01T12:00:00.000Z')
@@ -7,25 +8,6 @@ const HORA = 60 * 60 * 1000
 const DIA = 24 * HORA
 
 export const TOTAL_NFTS = 60
-
-/** Gerador pseudoaleatório com semente fixa (mulberry32): mesma sequência em toda execução. */
-function criarSorteio(semente: number) {
-  let estado = semente
-  const proximo = () => {
-    estado = (estado + 0x6d2b79f5) | 0
-    let t = Math.imul(estado ^ (estado >>> 15), 1 | estado)
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-  return {
-    inteiro: (min: number, max: number) => min + Math.floor(proximo() * (max - min + 1)),
-    item: <T,>(lista: readonly T[]): T => lista[Math.floor(proximo() * lista.length)] as T,
-    chance: (probabilidade: number) => proximo() < probabilidade,
-    hex: (tamanho: number) => Array.from({ length: tamanho }, () => Math.floor(proximo() * 16).toString(16)).join(''),
-  }
-}
-
-type Sorteio = ReturnType<typeof criarSorteio>
 
 const ARTES: Record<ImagemNft, { colecao: string; sufixos: readonly string[]; atributos: readonly string[] }> = {
   'ape-green-jacket': { colecao: 'Kurio Apes', sufixos: ['Ape', 'Vessel'], atributos: ['Óculos', 'Esmeralda', 'Jaqueta'] },
