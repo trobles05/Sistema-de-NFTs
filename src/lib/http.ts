@@ -20,6 +20,8 @@ export function criarHttp(config: CreateAxiosDefaults = {}) {
     baseURL: '/api',
     timeout: 10_000,
     transitional: { clarifyTimeoutError: true },
+    // Listas como `categorias=musica&categorias=jogos` (sem os colchetes padrão do Axios), igual à URL do catálogo.
+    paramsSerializer: { indexes: null },
     ...config,
   })
 

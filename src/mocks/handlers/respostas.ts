@@ -2,7 +2,8 @@ import { HttpResponse } from 'msw'
 import type { z } from 'zod'
 import type { CodigoErro, ErroApi } from '@/types'
 
-export function responderErro(status: number, codigo: CodigoErro, mensagem: string, campos?: Record<string, string>) {
+/** Tipada como `Response` para combinar com qualquer resposta de sucesso no mesmo handler. */
+export function responderErro(status: number, codigo: CodigoErro, mensagem: string, campos?: Record<string, string>): Response {
   return HttpResponse.json<ErroApi>({ erro: { codigo, mensagem, ...(campos && { campos }) } }, { status })
 }
 
