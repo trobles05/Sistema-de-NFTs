@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Botao } from '@/components/ui/Botao'
+import { Esqueleto } from '@/components/ui/Esqueleto'
 import { FaixaPreco } from '@/components/ui/FaixaPreco'
 import { centavosParaEth, ethParaCentavos, FAIXA_PRECO_CENTAVOS, ROTULOS_CATEGORIA, ROTULOS_REDE } from '@/lib/catalogo'
 import { cn } from '@/lib/utils'
@@ -37,7 +38,11 @@ function OpcaoFiltro({ rotulo, contagem, ativa, negritoContagem, aoClicar }: { r
           {rotulo}
           {ativa && <span className="sr-only">(selecionado)</span>}
         </span>
-        {contagem !== undefined && <span className={cn(negritoContagem && 'font-bold', ativa && 'font-bold')}>({contagem})</span>}
+        {contagem === undefined ? (
+          <Esqueleto className="h-4 w-7" />
+        ) : (
+          <span className={cn(negritoContagem && 'font-bold', ativa && 'font-bold')}>({contagem})</span>
+        )}
       </button>
     </li>
   )

@@ -1,10 +1,13 @@
 import { Link } from '@tanstack/react-router'
+import { Esqueleto } from '@/components/ui/Esqueleto'
 import { useDestaques } from '@/hooks/useCatalogo'
 import { ImagemNft } from './ImagemNft'
 
 /** "NFT EM DESTAQUE / OFERTA LIMITADA" sob os filtros (desktop): o segundo destaque, como no Figma. */
 export function CartaoDestaqueLateral() {
-  const nft = useDestaques().data?.itens[1]
+  const { data, isPending } = useDestaques()
+  const nft = data?.itens[1]
+  if (isPending) return <Esqueleto className="mt-[104px] aspect-[310/368] w-full rounded-[15px]" />
   if (!nft) return null
   return (
     <Link to="/nft/$id" params={{ id: nft.id }} className="group mt-6 flex flex-col gap-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-destaque">
