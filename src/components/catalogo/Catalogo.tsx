@@ -1,11 +1,11 @@
 import { AbaConteudo, Abas } from '@/components/ui/Abas'
-import { Botao } from '@/components/ui/Botao'
 import { Paginacao } from '@/components/ui/Paginacao'
 import { useCatalogo } from '@/hooks/useCatalogo'
-import { mensagemAmigavel } from '@/lib/erros'
 import { AbaCatalogoSchema, type FiltrosCatalogo as Filtros } from '@/types'
 import { AbasCatalogo, OrdenacaoCatalogo } from './BarraCatalogo'
 import { FiltrosCatalogo } from './FiltrosCatalogo'
+import { GradeEsqueleto } from './EsqueletoCartaoNft'
+import { AvisoAtualizacao, EstadoErro, EstadoVazio } from './EstadosCatalogo'
 import { GradeNfts } from './GradeNfts'
 
 export interface CatalogoProps {
@@ -47,23 +47,19 @@ export function Catalogo({ filtros, aoMudar, rodapeSidebar }: CatalogoProps) {
 
           <AbaConteudo value={filtros.aba} aria-busy={consulta.isFetching} className="focus-visible:outline-none">
             {consulta.isError && !pagina ? (
-              <div role="alert" className="flex flex-col items-start gap-4 py-16">
-                <p className="text-f16">{mensagemAmigavel(consulta.error)}</p>
-                <Botao variante="contorno" onClick={() => void consulta.refetch()}>
-                  Tentar novamente
-                </Botao>
-              </div>
+              <EstadoErro erro={consulta.error} tentando={consulta.isFetching} aoTentar={() => void consulta.refetch()} />
             ) : !pagina ? (
-              <p className="py-16 text-f15 text-texto-secundario">Carregando NFTs…</p>
+              <>
+                <p className="sr-only" aria-live="polite">
+                  Carregando NFTs…
+                </p>
+                <GradeEsqueleto />
+              </>
             ) : pagina.total === 0 ? (
-              <div className="flex flex-col items-start gap-4 py-16">
-                <p className="text-f16">Nenhum NFT encontrado com esses filtros.</p>
-                <Botao variante="contorno" onClick={() => aoMudar({ busca: undefined, categorias: undefined, redes: undefined, precoMin: undefined, precoMax: undefined, aba: 'todos' })}>
-                  Limpar filtros
-                </Botao>
-              </div>
+              <EstadoVazio aoLimpar={() => aoMudar({ busca: undefined, categorias: undefined, redes: undefined, precoMin: undefined, precoMax: undefined, aba: 'todos' })} />
             ) : (
               <>
+                {consulta.isError && <AvisoAtualizacao tentando={consulta.isFetching} aoTentar={() => void consulta.refetch()} />}
                 <p className="sr-only" aria-live="polite">
                   {pagina.total} NFTs encontrados, página {pagina.pagina} de {pagina.totalPaginas}.
                 </p>

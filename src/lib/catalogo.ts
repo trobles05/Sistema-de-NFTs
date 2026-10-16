@@ -23,6 +23,9 @@ export const ROTULOS_ORDENACAO: Record<FiltrosCatalogo['ordenacao'], string> = {
 
 export const FILTROS_PADRAO: FiltrosCatalogo = FiltrosCatalogoSchema.parse({})
 
+/** Itens por página do catálogo (igual à API simulada). */
+export const POR_PAGINA_CATALOGO = 9
+
 /** Faixa do slider de preço, em centavos de ETH (0.02 a 12.30, como no Figma). */
 export const FAIXA_PRECO_CENTAVOS = [2, 1230] as const
 

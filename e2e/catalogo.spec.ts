@@ -3,7 +3,8 @@ import { expect, test, type Page } from '@playwright/test'
 const ehMobile = (page: Page) => (page.viewportSize()?.width ?? 0) < 768
 const grade = (page: Page) => page.getByRole('list', { name: 'NFTs' })
 const nomesNaGrade = (page: Page) => grade(page).locator('h3').allTextContents()
-const resumo = (page: Page) => page.locator('#catalogo p[aria-live="polite"].sr-only')
+/** Anúncio de resultado para leitor de tela (há também o "Carregando NFTs…" enquanto carrega). */
+const resumo = (page: Page) => page.locator('#catalogo p[aria-live="polite"].sr-only').filter({ hasText: 'NFTs encontrados' })
 
 async function abrir(page: Page, caminho = '/') {
   await page.goto(caminho)

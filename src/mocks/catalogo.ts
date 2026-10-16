@@ -9,9 +9,10 @@ import {
   type PaginaCatalogo,
   type Rede,
 } from '@/types'
+import { POR_PAGINA_CATALOGO } from '@/lib/catalogo'
 import { compararEth } from '@/utils/eth'
 
-export const POR_PAGINA = 9
+export const POR_PAGINA = POR_PAGINA_CATALOGO
 /** "Novos lançamentos" = os N lançados mais recentemente (os dados são fixos; uma janela de dias esvaziaria com o tempo). */
 export const QUANTIDADE_LANCAMENTOS = 12
 export const QUANTIDADE_DESTAQUES = 3
