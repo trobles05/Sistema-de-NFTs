@@ -6,6 +6,7 @@
   --cor-superficie-escura: #38220f;
   --cor-superficie-elevada: #2f1d15;
   --cor-fundo-claro: #fbfbfb;
+  --cor-branco: #ffffff; /* destaques brancos do Figma atual (footer, faixa de preço) */
 
   /* Bordas */
   --cor-borda: #3f2319;
