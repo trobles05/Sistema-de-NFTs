@@ -53,3 +53,8 @@ test.describe('servidor simulado (MSW) no build de demonstração', () => {
     expect(await page.evaluate(() => window.__kurioMocks?.cenarios)).toContain('pagamento-recusado')
   })
 })
+
+test('a vitrine de componentes não existe no build de produção', async ({ page }) => {
+  await page.goto('/dev/componentes')
+  await expect(page.getByRole('heading', { name: 'Página não encontrada' })).toBeVisible()
+})
