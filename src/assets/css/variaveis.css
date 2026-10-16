@@ -4,6 +4,7 @@
   --cor-fundo: #140d0a;
   --cor-superficie: #241612;
   --cor-superficie-escura: #38220f;
+  --cor-superficie-elevada: #2f1d15;
   --cor-fundo-claro: #fbfbfb;
 
   /* Bordas */
@@ -14,11 +15,21 @@
   --cor-primaria: #d28a4c;
   --cor-destaque: #e89b55;
 
+  /* Estados */
+  --cor-coral: #f0805f; /* asterisco de obrigatório e mensagens de erro */
+  --cor-sucesso: #00a66c;
+
   /* Texto */
   --cor-texto: #f5f1eb;
   --cor-texto-primario: #f7f3ec;
   --cor-texto-secundario: #cfb28c;
   --cor-texto-terciario: #b39463;
+
+  /* Raios (desktop compacto / mobile arredondado, medidos no Figma) */
+  --raio-campo: 3px;
+  --raio-campo-mobile: 10px;
+  --raio-cabecalho: 6px;
+  --raio-social: 5px;
 
   /* Fonte */
   --fonte: "Roboto Mono", ui-monospace, monospace;
@@ -38,6 +49,9 @@
   --f16: 1rem;
   --f17: 1.0625rem;
   --f18: 1.125rem;
+  --f20: 1.25rem;
+  --f22: 1.375rem;
   --f24: 1.5rem;
+  --f32: 2rem;
   --f43: clamp(1.75rem, 1rem + 2.5vw, 2.6875rem);
 }
