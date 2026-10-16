@@ -24,8 +24,11 @@ const REDES: readonly Rede[] = ['ethereum', 'polygon', 'solana']
 const NOME_REDE: Record<Rede, string> = { ethereum: 'Ethereum', polygon: 'Polygon', solana: 'Solana' }
 
 /** Os 9 NFTs desenhados no Figma, na ordem do grid da tela Início (mais recentes primeiro). */
-const DO_FIGMA: readonly { nome: string; imagem: ImagemNft; preco: EthString; precoAnterior?: EthString; raro?: boolean; categoria: Categoria; rede: Rede }[] = [
-  { nome: 'Emerald Ape #042', imagem: 'ape-green-jacket', preco: '1.19', categoria: 'arte-digital', rede: 'ethereum' },
+/** Avaliação e atributos aparecem no Figma só para o Emerald Ape (telas de detalhe). */
+type ExtrasFigma = { avaliacao?: { media: number; total: number }; atributos?: string[] }
+
+const DO_FIGMA: readonly ({ nome: string; imagem: ImagemNft; preco: EthString; precoAnterior?: EthString; raro?: boolean; categoria: Categoria; rede: Rede } & ExtrasFigma)[] = [
+  { nome: 'Emerald Ape #042', imagem: 'ape-green-jacket', preco: '1.19', categoria: 'arte-digital', rede: 'ethereum', avaliacao: { media: 4.8, total: 19 }, atributos: ['Óculos', 'Esmeralda', 'Raro'] },
   { nome: 'Sage Nomad #009', imagem: 'nomad-bucket-hat', preco: '1.69', categoria: 'arte-digital', rede: 'polygon' },
   { nome: 'Neon Vessel #552', imagem: 'ape-green-jacket', preco: '1.99', precoAnterior: '2.29', raro: true, categoria: 'colecionaveis', rede: 'ethereum' },
   { nome: 'Cosmic Bloom #118', imagem: 'nomad-bucket-hat', preco: '1.29', categoria: 'generativa', rede: 'solana' },
@@ -94,9 +97,10 @@ function criarNft(sorteio: Sorteio, indice: number): Nft {
       `${nome} é uma obra digital da coleção ${arte.colecao}. Cada atributo fica armazenado nos metadados do token e verificado na ${NOME_REDE[rede]}.`,
       'A propriedade inclui a arte em alta resolução, lançamentos exclusivos para colecionadores e um registro permanente de procedência registrada na rede.',
     ],
-    atributos: [...arte.atributos.slice(0, 2), ...(doFigma?.raro ? ['Raro'] : [])],
+    atributos: doFigma?.atributos ?? [...arte.atributos.slice(0, 2), ...(doFigma?.raro ? ['Raro'] : [])],
     contrato: { endereco: `0x${sorteio.hex(40)}`, padrao: 'ERC-721', royaltyPercentual: 5 },
-    avaliacao: { media: sorteio.inteiro(35, 50) / 10, total: sorteio.inteiro(0, 120) },
+    // Os sorteios acontecem sempre (mesmo com o valor do Figma) para não deslocar a sequência dos demais NFTs.
+    avaliacao: ((sorteada) => doFigma?.avaliacao ?? sorteada)({ media: sorteio.inteiro(35, 50) / 10, total: sorteio.inteiro(0, 120) }),
     // Nos 9 do Figma vale o selo do Figma. O sorteio continua acontecendo nos mesmos casos de antes,
     // só para não deslocar a sequência pseudoaleatória que gera os outros 51 NFTs.
     raro: doFigma ? (doFigma.raro ?? (sorteio.chance(0.15), false)) : sorteio.chance(0.15),
