@@ -29,6 +29,12 @@ async function entrar(page: Page, email: string, senha = SENHA) {
   await expect(page).toHaveURL((url) => !/^\/(entrar|cadastro)$/.test(url.pathname))
 }
 
+/** Confere quem está logado pela rota de perfil (funciona no desktop e no mobile). */
+async function esperarLogadoComo(page: Page, nome: string) {
+  await abrir(page, '/perfil')
+  await expect(page.getByText(`Olá, ${nome}.`)).toBeVisible()
+}
+
 test.describe('cadastro', () => {
   test('valida campos e mostra conflito de e-mail no próprio campo', async ({ page }) => {
     await abrir(page, '/cadastro')
@@ -49,23 +55,34 @@ test.describe('cadastro', () => {
   })
 
   test('cadastro válido entra logado e volta ao destino', async ({ page }) => {
-    await abrir(page, '/cadastro?redirect=/em-breve')
+    await abrir(page, '/cadastro?redirect=/perfil')
     const form = formulario(page)
     await form.getByRole('textbox', { name: 'Nome de usuário' }).fill('carla.dias')
     await form.getByRole('textbox', { name: 'E-mail' }).fill('carla@kurio.dev')
     await form.getByLabel('Senha', { exact: true }).fill('senha-forte')
     await form.getByLabel('Confirmar senha').fill('senha-forte')
     await form.getByRole('button', { name: /Criar (conta|perfil)/ }).click()
-    await esperarCaminho(page, '/em-breve')
-    expect(await page.evaluate(() => localStorage.getItem('kurio:sessao'))).toContain('usr-')
+    await esperarCaminho(page, '/perfil')
+    await expect(page.getByText('Olá, carla.dias.')).toBeVisible()
   })
 })
 
-test.describe('login', () => {
+test.describe('login e sessão', () => {
   test('senha errada mostra alerta geral sem dizer qual campo errou', async ({ page }) => {
     await abrir(page, '/entrar')
     await preencherLogin(page, 'ana@kurio.dev', 'senha-errada')
     await expect(page.getByRole('alert')).toHaveText('E-mail ou senha incorretos.')
+  })
+
+  test('rota privada leva ao login e volta para ela depois de entrar; a sessão sobrevive ao refresh', async ({ page }) => {
+    await page.goto('/perfil')
+    await expect(page).toHaveURL(/\/entrar\?redirect=%2Fperfil/)
+    await entrar(page, 'ana@kurio.dev')
+    await esperarCaminho(page, '/perfil')
+    await expect(page.getByText('Olá, Ana Souza.')).toBeVisible()
+
+    await page.reload()
+    await expect(page.getByText('Olá, Ana Souza.')).toBeVisible()
   })
 
   test('redirect externo é ignorado', async ({ page }) => {
@@ -74,6 +91,42 @@ test.describe('login', () => {
     await esperarCaminho(page, '/')
   })
 
+  test('logout limpa a sessão e protege a rota de novo; troca de usuário mostra só o novo', async ({ page }) => {
+    await abrir(page, '/entrar?redirect=/perfil')
+    await entrar(page, 'ana@kurio.dev')
+    await esperarLogadoComo(page, 'Ana Souza')
+
+    await page.getByRole('button', { name: 'Sair' }).click()
+    await esperarCaminho(page, '/')
+    await page.goto('/perfil')
+    await expect(page).toHaveURL(/\/entrar/)
+
+    await entrar(page, 'bruno@kurio.dev')
+    await esperarLogadoComo(page, 'Bruno Lima')
+    await expect(page.getByText('Ana Souza')).toHaveCount(0)
+  })
+
+  test('header mostra o usuário logado no lugar de "Entrar" (desktop)', async ({ page }) => {
+    test.skip(ehMobile(page), 'header desktop')
+    await abrir(page, '/')
+    await page.getByRole('link', { name: 'Entrar' }).click()
+    await expect(page).toHaveURL(/\/entrar\?redirect=%2F/)
+    await entrar(page, 'ana@kurio.dev')
+    await expect(page.getByRole('link', { name: 'Meu perfil (Ana Souza)' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Entrar' })).toHaveCount(0)
+  })
+
+  test('logout em outra aba derruba esta aba também', async ({ page, context }) => {
+    await abrir(page, '/entrar?redirect=/perfil')
+    await entrar(page, 'ana@kurio.dev')
+    await esperarLogadoComo(page, 'Ana Souza')
+
+    const outraAba = await context.newPage()
+    await outraAba.goto('/perfil')
+    await outraAba.getByRole('button', { name: 'Sair' }).click()
+
+    await expect(page).toHaveURL(/\/entrar\?redirect=%2Fperfil/)
+  })
 })
 
 test.describe('telas de autenticação', () => {
@@ -91,11 +144,11 @@ test.describe('telas de autenticação', () => {
   })
 
   test('link de texto alterna entre login e cadastro mantendo o destino', async ({ page }) => {
-    await abrir(page, '/entrar?redirect=/em-breve')
+    await abrir(page, '/entrar?redirect=/perfil')
     await page.getByRole('link', { name: 'Novo na Kurio? Crie uma conta' }).click()
-    await expect(page).toHaveURL(/\/cadastro\?redirect=%2Fem-breve/)
+    await expect(page).toHaveURL(/\/cadastro\?redirect=%2Fperfil/)
     await page.getByRole('link', { name: 'Já tem uma conta? Entre' }).click()
-    await expect(page).toHaveURL(/\/entrar\?redirect=%2Fem-breve/)
+    await expect(page).toHaveURL(/\/entrar\?redirect=%2Fperfil/)
   })
 
   test('mobile: tela cheia, sem tab bar nem footer', async ({ page }) => {

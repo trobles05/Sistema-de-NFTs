@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { useSyncExternalStore } from 'react'
-import { assinarSessao, obterSessao, salvarSessao } from '@/lib/sessao'
+import { assinarSessao, limparSessao, obterSessao, salvarSessao } from '@/lib/sessao'
 import { servicoSessao } from '@/services/sessao'
 import type { Sessao } from '@/types'
 
@@ -30,11 +31,13 @@ export function useSessao() {
   }
 }
 
-/** Entrar com outra conta substitui a anterior: o cache inteiro é descartado antes de gravar a nova sessão. */
+/**
+ * Grava a nova sessão. A troca de token já descarta o cache inteiro (SincronizacaoSessao), então
+ * nada do usuário anterior sobrevive; em seguida o cache da sessão nova é preenchido.
+ */
 function useIniciarSessao() {
   const queryClient = useQueryClient()
   return (sessao: Sessao) => {
-    queryClient.clear()
     salvarSessao(sessao)
     queryClient.setQueryData([...CHAVE_SESSAO, sessao.token], sessao)
   }
@@ -50,3 +53,14 @@ export function useCadastrar() {
   return useMutation({ mutationFn: servicoSessao.cadastrar, onSuccess: iniciar })
 }
 
+/** Logout: avisa a API (falha de rede não impede sair), apaga o token e volta para a Início. */
+export function useSair() {
+  const navigate = useNavigate()
+  return useMutation({
+    mutationFn: () => servicoSessao.sair().catch(() => undefined),
+    onSettled: () => {
+      limparSessao()
+      void navigate({ to: '/' })
+    },
+  })
+}
