@@ -8,9 +8,9 @@ interface PaginacaoProps {
 }
 
 const classesItem =
-  'grid size-[26px] place-items-center rounded-[3px] border border-borda-suave text-f12 text-texto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque disabled:cursor-not-allowed disabled:opacity-40'
+  'grid size-[35px] place-items-center rounded-[3px] border border-borda-suave text-f14 text-texto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque disabled:cursor-not-allowed disabled:opacity-40'
 
-/** Figma: quadrados pequenos, o atual preenchido de laranja; seta ">" para a próxima. */
+/** Figma: quadrados de 35px (espaço de 8px), o atual preenchido de laranja; seta ">" para a próxima. */
 export function Paginacao({ pagina, totalPaginas, aoMudar, className }: PaginacaoProps) {
   if (totalPaginas <= 1) return null
   return (

@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test'
 
 async function abrir(page: Page, caminho: string) {
   await page.goto(caminho)
-  await expect(page.locator('main#conteudo h1')).toBeVisible()
+  await expect(page.locator('main#conteudo h1').filter({ visible: true }).first()).toBeVisible()
 }
 
 const ehMobile = (page: Page) => (page.viewportSize()?.width ?? 0) < 768
@@ -28,11 +28,11 @@ test.describe('layout da loja', () => {
     await expect(page.getByRole('navigation', { name: 'Navegação rápida' })).toHaveCount(0)
     test.skip(ehMobile(page), 'header desktop')
     await expect(page.getByRole('navigation', { name: 'Principal' }).getByRole('link', { name: 'Mercado' })).toHaveAttribute('aria-current', 'page')
-    const fio = await page.locator('header > div').evaluate((el) => getComputedStyle(el).borderBottomWidth)
+    const fio = await page.getByRole('banner').locator('> div').evaluate((el) => getComputedStyle(el).borderBottomWidth)
     expect(fio).toBe('0px')
 
     await abrir(page, '/')
-    expect(await page.locator('header > div').evaluate((el) => getComputedStyle(el).borderBottomWidth)).toBe('1px')
+    expect(await page.getByRole('banner').locator('> div').evaluate((el) => getComputedStyle(el).borderBottomWidth)).toBe('1px')
   })
 
   test('header fica fixo no topo ao rolar (desktop)', async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe('layout da loja', () => {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 2))
     const menu = page.getByRole('navigation', { name: 'Principal' })
     await expect(menu).toBeInViewport()
-    expect(await page.locator('header').evaluate((el) => Math.round(el.getBoundingClientRect().top))).toBe(0)
+    expect(await page.getByRole('banner').evaluate((el) => Math.round(el.getBoundingClientRect().top))).toBe(0)
   })
 
   test('"Pular para o conteúdo" é o primeiro Tab e leva o foco ao main', async ({ page }) => {

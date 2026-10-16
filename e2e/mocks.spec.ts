@@ -16,7 +16,7 @@ function consultarSaude(page: Page) {
 /** O app só renderiza depois que os mocks sobem: a tela visível é o sinal de pronto. */
 async function abrir(page: Page, caminho: string) {
   await page.goto(caminho)
-  await expect(page.locator('h1').first()).toBeVisible()
+  await expect(page.locator('h1').filter({ visible: true }).first()).toBeVisible()
 }
 
 test.describe('servidor simulado (MSW) no build de demonstração', () => {
@@ -35,7 +35,7 @@ test.describe('servidor simulado (MSW) no build de demonstração', () => {
   test('o cenário escolhido sobrevive ao refresh', async ({ page }) => {
     await abrir(page, '/?cenario=lento')
     await page.reload()
-    await expect(page.getByRole('heading', { name: 'KURIO' })).toBeVisible()
+    await expect(page.locator('h1').filter({ visible: true }).first()).toBeVisible()
     expect(await page.evaluate(() => window.__kurioMocks?.cenario())).toBe('lento')
   })
 

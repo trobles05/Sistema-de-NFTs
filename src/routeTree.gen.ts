@@ -19,6 +19,7 @@ import { Route as LojaEntrarRouteImport } from './routes/_loja/entrar'
 import { Route as DevComponentesRouteImport } from './routes/dev.componentes'
 import { Route as LojaPrivadoFavoritosRouteImport } from './routes/_loja/_privado/favoritos'
 import { Route as LojaPrivadoPerfilRouteImport } from './routes/_loja/_privado/perfil'
+import { Route as LojaNftIdRouteImport } from './routes/_loja/nft.$id'
 
 const LojaRoute = LojaRouteImport.update({
   id: '/_loja',
@@ -68,6 +69,11 @@ const LojaPrivadoPerfilRoute = LojaPrivadoPerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => LojaPrivadoRoute,
 } as any)
+const LojaNftIdRoute = LojaNftIdRouteImport.update({
+  id: '/nft/$id',
+  path: '/nft/$id',
+  getParentRoute: () => LojaRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LojaIndexRoute
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/dev/componentes': typeof DevComponentesRoute
   '/favoritos': typeof LojaPrivadoFavoritosRoute
   '/perfil': typeof LojaPrivadoPerfilRoute
+  '/nft/$id': typeof LojaNftIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LojaIndexRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/dev/componentes': typeof DevComponentesRoute
   '/favoritos': typeof LojaPrivadoFavoritosRoute
   '/perfil': typeof LojaPrivadoPerfilRoute
+  '/nft/$id': typeof LojaNftIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/_loja/': typeof LojaIndexRoute
   '/_loja/_privado/favoritos': typeof LojaPrivadoFavoritosRoute
   '/_loja/_privado/perfil': typeof LojaPrivadoPerfilRoute
+  '/_loja/nft/$id': typeof LojaNftIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
     | '/dev/componentes'
     | '/favoritos'
     | '/perfil'
+    | '/nft/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/dev/componentes'
     | '/favoritos'
     | '/perfil'
+    | '/nft/$id'
   id:
     | '__root__'
     | '/_loja'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/_loja/'
     | '/_loja/_privado/favoritos'
     | '/_loja/_privado/perfil'
+    | '/_loja/nft/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -214,6 +226,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LojaPrivadoPerfilRouteImport
       parentRoute: typeof LojaPrivadoRoute
     }
+    '/_loja/nft/$id': {
+      id: '/_loja/nft/$id'
+      path: '/nft/$id'
+      fullPath: '/nft/$id'
+      preLoaderRoute: typeof LojaNftIdRouteImport
+      parentRoute: typeof LojaRoute
+    }
   }
 }
 
@@ -238,6 +257,7 @@ interface LojaRouteChildren {
   LojaEmBreveRoute: typeof LojaEmBreveRoute
   LojaEntrarRoute: typeof LojaEntrarRoute
   LojaIndexRoute: typeof LojaIndexRoute
+  LojaNftIdRoute: typeof LojaNftIdRoute
 }
 
 const LojaRouteChildren: LojaRouteChildren = {
@@ -247,6 +267,7 @@ const LojaRouteChildren: LojaRouteChildren = {
   LojaEmBreveRoute: LojaEmBreveRoute,
   LojaEntrarRoute: LojaEntrarRoute,
   LojaIndexRoute: LojaIndexRoute,
+  LojaNftIdRoute: LojaNftIdRoute,
 }
 
 const LojaRouteWithChildren = LojaRoute._addFileChildren(LojaRouteChildren)

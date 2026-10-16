@@ -1,9 +1,15 @@
-/** Conteúdo da Início. Também aparece ao fundo do modal de login/cadastro no desktop. */
-export function PaginaInicio() {
+import { FILTROS_PADRAO } from '@/lib/catalogo'
+import { BarraBuscaMobile } from './BarraBuscaMobile'
+import { Catalogo, type CatalogoProps } from './Catalogo'
+
+/** Conteúdo da Início. Também aparece ao fundo do modal de login/cadastro no desktop (sem interação). */
+export function PaginaInicio({ filtros = FILTROS_PADRAO, aoMudar = () => {} }: Partial<CatalogoProps>) {
   return (
-    <section id="catalogo" className="mx-auto flex min-h-dvh max-w-[1200px] flex-col items-center justify-center gap-3 px-4 text-center">
-      <h1 className="text-f43 font-bold tracking-[0.1em]">KURIO</h1>
-      <p className="text-f14 text-texto-secundario">Destaques e catálogo chegam na T-015.</p>
-    </section>
+    <div className="flex flex-col gap-4 pt-10 md:gap-24 md:pt-8">
+      {/* O título visível da página chega com o banner de destaques (parte 2/2). */}
+      <h1 className="sr-only">Kurio — catálogo de NFTs</h1>
+      <BarraBuscaMobile filtros={filtros} aoMudar={aoMudar} />
+      <Catalogo filtros={filtros} aoMudar={aoMudar} />
+    </div>
   )
 }

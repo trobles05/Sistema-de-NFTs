@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import alerta from '@/assets/icons/iconly/alerta.svg'
 import atividade from '@/assets/icons/iconly/atividade.svg'
+import buscaMobile from '@/assets/icons/iconly/busca-mobile.svg'
 import busca from '@/assets/icons/iconly/busca.svg'
 import carrinhoCheio from '@/assets/icons/iconly/carrinho-cheio.svg'
 import carrinho from '@/assets/icons/iconly/carrinho.svg'
@@ -8,6 +9,7 @@ import casa from '@/assets/icons/iconly/casa.svg'
 import coracaoCheio from '@/assets/icons/iconly/coracao-cheio.svg'
 import coracao from '@/assets/icons/iconly/coracao.svg'
 import download from '@/assets/icons/iconly/download.svg'
+import filtro from '@/assets/icons/iconly/filtro.svg'
 import imagem from '@/assets/icons/iconly/imagem.svg'
 import localizacao from '@/assets/icons/iconly/localizacao.svg'
 import olhoOculto from '@/assets/icons/iconly/olho-oculto.svg'
@@ -26,12 +28,14 @@ const ICONES = {
   alerta: { src: alerta, escala: 0.79 },
   atividade: { src: atividade, escala: 0.8 },
   busca: { src: busca, escala: 1 },
+  'busca-mobile': { src: buscaMobile, escala: 0.83 },
   carrinho: { src: carrinho, escala: 1 },
   'carrinho-cheio': { src: carrinhoCheio, escala: 0.88 },
   casa: { src: casa, escala: 0.83 },
   coracao: { src: coracao, escala: 1 },
   'coracao-cheio': { src: coracaoCheio, escala: 1 },
   download: { src: download, escala: 0.78 },
+  filtro: { src: filtro, escala: 0.73 },
   imagem: { src: imagem, escala: 0.78 },
   localizacao: { src: localizacao, escala: 0.81 },
   'olho-oculto': { src: olhoOculto, escala: 0.83 },

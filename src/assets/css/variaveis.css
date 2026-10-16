@@ -16,6 +16,9 @@
   --cor-primaria: #d28a4c;
   --cor-destaque: #e89b55;
 
+  /* Degradês (medidos nos prints do Figma) */
+  --degrade-primaria: linear-gradient(135deg, #865832 0%, #d28a4c 100%); /* botão de filtro da Início mobile */
+
   /* Estados */
   --cor-coral: #f0805f; /* asterisco de obrigatório e mensagens de erro */
   --cor-sucesso: #00a66c;
