@@ -67,6 +67,13 @@ describe('cliente HTTP', () => {
     expect(cabecalhos).toEqual([null, 'Bearer tok-ana'])
   })
 
+  it('envia listas repetindo a chave, sem colchetes (igual à URL do catálogo)', async () => {
+    let consulta = ''
+    servidor.use(mock.get(`${BASE}/nfts`, ({ request }) => ((consulta = new URL(request.url).search), HttpResponse.json({}))))
+    await cliente.get('/nfts', { params: { categorias: ['musica', 'jogos'], pagina: 2 } })
+    expect(consulta).toBe('?categorias=musica&categorias=jogos&pagina=2')
+  })
+
   it('converte erro da API em ErroHttp com código, status e erros por campo', async () => {
     servidor.use(
       mock.post(`${BASE}/auth/cadastro`, () =>

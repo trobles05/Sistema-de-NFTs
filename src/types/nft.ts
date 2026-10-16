@@ -108,3 +108,9 @@ export const PaginaCatalogoSchema = paginado(NftResumoSchema).extend({
   }),
 })
 export type PaginaCatalogo = z.infer<typeof PaginaCatalogoSchema>
+
+/** Resposta de GET /api/nfts/destaques (banner da Início). */
+export const DestaquesSchema = z.object({
+  itens: z.array(NftResumoSchema),
+})
+export type Destaques = z.infer<typeof DestaquesSchema>
