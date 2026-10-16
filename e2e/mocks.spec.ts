@@ -16,7 +16,7 @@ function consultarSaude(page: Page) {
 /** O app só renderiza depois que os mocks sobem: a tela visível é o sinal de pronto. */
 async function abrir(page: Page, caminho: string) {
   await page.goto(caminho)
-  await expect(page.getByRole('heading', { name: /KURIO|Página não encontrada/ })).toBeVisible()
+  await expect(page.locator('h1').first()).toBeVisible()
 }
 
 test.describe('servidor simulado (MSW) no build de demonstração', () => {

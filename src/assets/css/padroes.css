@@ -16,6 +16,12 @@
     color: var(--cor-fundo);
     background-color: var(--cor-primaria);
   }
+  /* Header fixo no desktop: âncoras e "Pular para o conteúdo" não ficam escondidos atrás dele. */
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 96px;
+    }
+  }
   :focus-visible {
     outline: 2px solid var(--cor-destaque);
     outline-offset: 2px;

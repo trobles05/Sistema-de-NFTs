@@ -9,13 +9,48 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as LojaRouteImport } from './routes/_loja'
+import { Route as LojaIndexRouteImport } from './routes/_loja/index'
+import { Route as LojaCarrinhoRouteImport } from './routes/_loja/carrinho'
+import { Route as LojaEmBreveRouteImport } from './routes/_loja/em-breve'
+import { Route as LojaEntrarRouteImport } from './routes/_loja/entrar'
+import { Route as LojaFavoritosRouteImport } from './routes/_loja/favoritos'
+import { Route as LojaPerfilRouteImport } from './routes/_loja/perfil'
 import { Route as DevComponentesRouteImport } from './routes/dev.componentes'
 
-const IndexRoute = IndexRouteImport.update({
+const LojaRoute = LojaRouteImport.update({
+  id: '/_loja',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LojaIndexRoute = LojaIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaCarrinhoRoute = LojaCarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaEmBreveRoute = LojaEmBreveRouteImport.update({
+  id: '/em-breve',
+  path: '/em-breve',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaEntrarRoute = LojaEntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaFavoritosRoute = LojaFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaPerfilRoute = LojaPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => LojaRoute,
 } as any)
 const DevComponentesRoute = DevComponentesRouteImport.update({
   id: '/dev/componentes',
@@ -24,39 +59,120 @@ const DevComponentesRoute = DevComponentesRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof LojaIndexRoute
+  '/carrinho': typeof LojaCarrinhoRoute
+  '/em-breve': typeof LojaEmBreveRoute
+  '/entrar': typeof LojaEntrarRoute
+  '/favoritos': typeof LojaFavoritosRoute
+  '/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/carrinho': typeof LojaCarrinhoRoute
+  '/em-breve': typeof LojaEmBreveRoute
+  '/entrar': typeof LojaEntrarRoute
+  '/favoritos': typeof LojaFavoritosRoute
+  '/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
+  '/': typeof LojaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_loja': typeof LojaRouteWithChildren
+  '/_loja/carrinho': typeof LojaCarrinhoRoute
+  '/_loja/em-breve': typeof LojaEmBreveRoute
+  '/_loja/entrar': typeof LojaEntrarRoute
+  '/_loja/favoritos': typeof LojaFavoritosRoute
+  '/_loja/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
+  '/_loja/': typeof LojaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dev/componentes'
+  fullPaths:
+    | '/'
+    | '/carrinho'
+    | '/em-breve'
+    | '/entrar'
+    | '/favoritos'
+    | '/perfil'
+    | '/dev/componentes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dev/componentes'
-  id: '__root__' | '/' | '/dev/componentes'
+  to:
+    | '/carrinho'
+    | '/em-breve'
+    | '/entrar'
+    | '/favoritos'
+    | '/perfil'
+    | '/dev/componentes'
+    | '/'
+  id:
+    | '__root__'
+    | '/_loja'
+    | '/_loja/carrinho'
+    | '/_loja/em-breve'
+    | '/_loja/entrar'
+    | '/_loja/favoritos'
+    | '/_loja/perfil'
+    | '/dev/componentes'
+    | '/_loja/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  LojaRoute: typeof LojaRouteWithChildren
   DevComponentesRoute: typeof DevComponentesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_loja': {
+      id: '/_loja'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof LojaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_loja/': {
+      id: '/_loja/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof LojaIndexRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/carrinho': {
+      id: '/_loja/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof LojaCarrinhoRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/em-breve': {
+      id: '/_loja/em-breve'
+      path: '/em-breve'
+      fullPath: '/em-breve'
+      preLoaderRoute: typeof LojaEmBreveRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/entrar': {
+      id: '/_loja/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof LojaEntrarRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/favoritos': {
+      id: '/_loja/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof LojaFavoritosRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/perfil': {
+      id: '/_loja/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof LojaPerfilRouteImport
+      parentRoute: typeof LojaRoute
     }
     '/dev/componentes': {
       id: '/dev/componentes'
@@ -68,8 +184,28 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LojaRouteChildren {
+  LojaCarrinhoRoute: typeof LojaCarrinhoRoute
+  LojaEmBreveRoute: typeof LojaEmBreveRoute
+  LojaEntrarRoute: typeof LojaEntrarRoute
+  LojaFavoritosRoute: typeof LojaFavoritosRoute
+  LojaPerfilRoute: typeof LojaPerfilRoute
+  LojaIndexRoute: typeof LojaIndexRoute
+}
+
+const LojaRouteChildren: LojaRouteChildren = {
+  LojaCarrinhoRoute: LojaCarrinhoRoute,
+  LojaEmBreveRoute: LojaEmBreveRoute,
+  LojaEntrarRoute: LojaEntrarRoute,
+  LojaFavoritosRoute: LojaFavoritosRoute,
+  LojaPerfilRoute: LojaPerfilRoute,
+  LojaIndexRoute: LojaIndexRoute,
+}
+
+const LojaRouteWithChildren = LojaRoute._addFileChildren(LojaRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  LojaRoute: LojaRouteWithChildren,
   DevComponentesRoute: DevComponentesRoute,
 }
 export const routeTree = rootRouteImport
