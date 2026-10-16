@@ -4,8 +4,11 @@ import { criarNfts, criarUsuarios, type UsuarioFixture } from './fixtures'
 
 export { criarArmazenamentoMemoria, type Armazenamento } from '@/lib/armazenamento'
 
-/** Mudar o formato do estado exige subir esta versão: dados salvos de outra versão voltam às fixtures. */
-export const VERSAO_ESQUEMA = 1
+/**
+ * Mudar o formato do estado ou as fixtures exige subir esta versão: dados salvos de outra versão voltam às fixtures.
+ * v2: raridade dos 9 NFTs do Figma igual ao Figma (T-015).
+ */
+export const VERSAO_ESQUEMA = 2
 export const CHAVE_ARMAZENAMENTO = `kurio:mock-db:v${VERSAO_ESQUEMA}`
 
 export interface ItemCarrinhoRegistro {

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Icone } from '@/components/ui/Icone'
 import type { DadosLayout } from '@/lib/rotas'
 import { AcessoConta } from './AcessoConta'
+import { BuscaCabecalho } from './BuscaCabecalho'
 import { cn } from '@/lib/utils'
 
 interface CabecalhoProps extends Pick<DadosLayout, 'secao' | 'divisor'> {
@@ -70,9 +71,7 @@ export function Cabecalho({ secao = 'inicio', divisor = true, quantidadeCarrinho
         </nav>
 
         <div className="flex items-center gap-5 lg:gap-7">
-          <Link to="/" hash="catalogo" aria-label="Buscar NFTs" className={classeAcao}>
-            <Icone nome="busca" tamanho={20} />
-          </Link>
+          <BuscaCabecalho />
           <Link
             to="/carrinho"
             aria-label={quantidadeCarrinho > 0 ? `Carrinho, ${quantidadeCarrinho} ${quantidadeCarrinho === 1 ? 'item' : 'itens'}` : 'Carrinho'}

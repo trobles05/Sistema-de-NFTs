@@ -97,7 +97,9 @@ function criarNft(sorteio: Sorteio, indice: number): Nft {
     atributos: [...arte.atributos.slice(0, 2), ...(doFigma?.raro ? ['Raro'] : [])],
     contrato: { endereco: `0x${sorteio.hex(40)}`, padrao: 'ERC-721', royaltyPercentual: 5 },
     avaliacao: { media: sorteio.inteiro(35, 50) / 10, total: sorteio.inteiro(0, 120) },
-    raro: doFigma?.raro ?? sorteio.chance(0.15),
+    // Nos 9 do Figma vale o selo do Figma. O sorteio continua acontecendo nos mesmos casos de antes,
+    // só para não deslocar a sequência pseudoaleatória que gera os outros 51 NFTs.
+    raro: doFigma ? (doFigma.raro ?? (sorteio.chance(0.15), false)) : sorteio.chance(0.15),
     emAlta: indice % 4 === 1,
     // Os do Figma são os mais recentes (hora a hora); os demais, um por dia antes deles.
     lancadoEm: new Date(doFigma ? DATA_BASE - indice * HORA : DATA_BASE - (indice - DO_FIGMA.length + 1) * DIA).toISOString(),
