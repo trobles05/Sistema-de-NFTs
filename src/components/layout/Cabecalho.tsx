@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { Botao } from '@/components/ui/Botao'
 import { Icone } from '@/components/ui/Icone'
@@ -34,6 +34,7 @@ const classeAcao = 'relative grid size-8 place-items-center text-texto hover:tex
  * Aparece a partir de `md`; no mobile cada tela tem o próprio topo.
  */
 export function Cabecalho({ secao = 'inicio', divisor = true, quantidadeCarrinho = 0, className }: CabecalhoProps) {
+  const paginaAtual = useRouterState({ select: (estado) => estado.location.href })
   const ehInicio = secao === 'inicio'
   const ehMercado = secao === 'mercado'
 
@@ -86,7 +87,7 @@ export function Cabecalho({ secao = 'inicio', divisor = true, quantidadeCarrinho
             )}
           </Link>
           <Botao asChild tamanho="cabecalho" className="w-[100px] gap-1">
-            <Link to="/entrar">
+            <Link to="/entrar" search={{ redirect: paginaAtual }}>
               <Icone nome="sair" tamanho={20} />
               Entrar
             </Link>

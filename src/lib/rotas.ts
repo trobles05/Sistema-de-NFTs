@@ -9,7 +9,9 @@ declare module '@tanstack/react-router' {
     divisor?: boolean
     /** Tab bar mobile: só nas telas de navegação principal (detalhe, carrinho e pagamento têm barra própria). */
     barraAbas?: boolean
+    /** No mobile a tela ocupa tudo (sem footer), como login e cadastro no Figma. */
+    telaCheiaMobile?: boolean
   }
 }
 
-export type DadosLayout = Pick<StaticDataRouteOption, 'secao' | 'divisor' | 'barraAbas'>
+export type DadosLayout = Pick<StaticDataRouteOption, 'secao' | 'divisor' | 'barraAbas' | 'telaCheiaMobile'>

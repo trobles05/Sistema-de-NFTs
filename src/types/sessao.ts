@@ -29,7 +29,7 @@ export const CadastroEntradaSchema = z
     nomeUsuario: NomeUsuarioSchema,
     email: EmailSchema,
     senha: SenhaSchema,
-    confirmarSenha: z.string(),
+    confirmarSenha: z.string().min(1, 'Confirme a senha'),
   })
   .refine((d) => d.senha === d.confirmarSenha, {
     message: 'As senhas não conferem',

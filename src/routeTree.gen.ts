@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LojaRouteImport } from './routes/_loja'
 import { Route as LojaIndexRouteImport } from './routes/_loja/index'
+import { Route as LojaCadastroRouteImport } from './routes/_loja/cadastro'
 import { Route as LojaCarrinhoRouteImport } from './routes/_loja/carrinho'
 import { Route as LojaEmBreveRouteImport } from './routes/_loja/em-breve'
 import { Route as LojaEntrarRouteImport } from './routes/_loja/entrar'
@@ -25,6 +26,11 @@ const LojaRoute = LojaRouteImport.update({
 const LojaIndexRoute = LojaIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaCadastroRoute = LojaCadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
   getParentRoute: () => LojaRoute,
 } as any)
 const LojaCarrinhoRoute = LojaCarrinhoRouteImport.update({
@@ -60,6 +66,7 @@ const DevComponentesRoute = DevComponentesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof LojaIndexRoute
+  '/cadastro': typeof LojaCadastroRoute
   '/carrinho': typeof LojaCarrinhoRoute
   '/em-breve': typeof LojaEmBreveRoute
   '/entrar': typeof LojaEntrarRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/dev/componentes': typeof DevComponentesRoute
 }
 export interface FileRoutesByTo {
+  '/cadastro': typeof LojaCadastroRoute
   '/carrinho': typeof LojaCarrinhoRoute
   '/em-breve': typeof LojaEmBreveRoute
   '/entrar': typeof LojaEntrarRoute
@@ -79,6 +87,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_loja': typeof LojaRouteWithChildren
+  '/_loja/cadastro': typeof LojaCadastroRoute
   '/_loja/carrinho': typeof LojaCarrinhoRoute
   '/_loja/em-breve': typeof LojaEmBreveRoute
   '/_loja/entrar': typeof LojaEntrarRoute
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cadastro'
     | '/carrinho'
     | '/em-breve'
     | '/entrar'
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/dev/componentes'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/cadastro'
     | '/carrinho'
     | '/em-breve'
     | '/entrar'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_loja'
+    | '/_loja/cadastro'
     | '/_loja/carrinho'
     | '/_loja/em-breve'
     | '/_loja/entrar'
@@ -137,6 +149,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LojaIndexRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/cadastro': {
+      id: '/_loja/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof LojaCadastroRouteImport
       parentRoute: typeof LojaRoute
     }
     '/_loja/carrinho': {
@@ -185,6 +204,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LojaRouteChildren {
+  LojaCadastroRoute: typeof LojaCadastroRoute
   LojaCarrinhoRoute: typeof LojaCarrinhoRoute
   LojaEmBreveRoute: typeof LojaEmBreveRoute
   LojaEntrarRoute: typeof LojaEntrarRoute
@@ -194,6 +214,7 @@ interface LojaRouteChildren {
 }
 
 const LojaRouteChildren: LojaRouteChildren = {
+  LojaCadastroRoute: LojaCadastroRoute,
   LojaCarrinhoRoute: LojaCarrinhoRoute,
   LojaEmBreveRoute: LojaEmBreveRoute,
   LojaEntrarRoute: LojaEntrarRoute,

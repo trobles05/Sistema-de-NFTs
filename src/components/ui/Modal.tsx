@@ -12,13 +12,15 @@ interface ModalConteudoProps extends ComponentProps<typeof Dialog.Content> {
   /** Esconde o título visualmente (continua anunciado ao leitor de tela). */
   tituloOculto?: boolean
   descricao?: ReactNode
+  /** Classes do corpo do modal (o padrão é `px-6 pt-8 pb-10`). */
+  classNameCorpo?: string
 }
 
 /**
  * Modal do Figma (login, cadastro, confirmação): superfície #241612, até 500px (desktop) e a barra
  * laranja na base. O Radix prende o foco dentro, fecha com ESC/clique fora e devolve o foco ao gatilho.
  */
-export function ModalConteudo({ className, titulo, tituloOculto, descricao, children, ...props }: ModalConteudoProps) {
+export function ModalConteudo({ className, titulo, tituloOculto, descricao, classNameCorpo, children, ...props }: ModalConteudoProps) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
@@ -37,7 +39,7 @@ export function ModalConteudo({ className, titulo, tituloOculto, descricao, chil
         ) : (
           <Dialog.Description className="sr-only">{titulo}</Dialog.Description>
         )}
-        <div className="px-6 pt-8 pb-10">{children}</div>
+        <div className={cn('px-6 pt-8 pb-10', classNameCorpo)}>{children}</div>
         <Dialog.Close
           className="absolute top-4 right-4 grid size-8 place-items-center rounded-campo text-primaria focus-visible:outline-2 focus-visible:outline-destaque"
           aria-label="Fechar"
