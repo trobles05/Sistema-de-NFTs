@@ -2,6 +2,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { SincronizacaoSessao } from '@/components/conta/SincronizacaoSessao'
 import { Avisos } from '@/components/ui/Avisos'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -14,6 +15,7 @@ function RootLayout() {
     <>
       <Outlet />
       <Avisos />
+      <SincronizacaoSessao />
       {import.meta.env.DEV && (
         <>
           <ReactQueryDevtools buttonPosition="bottom-left" />

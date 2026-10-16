@@ -11,13 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LojaRouteImport } from './routes/_loja'
 import { Route as LojaIndexRouteImport } from './routes/_loja/index'
+import { Route as LojaPrivadoRouteImport } from './routes/_loja/_privado'
 import { Route as LojaCadastroRouteImport } from './routes/_loja/cadastro'
 import { Route as LojaCarrinhoRouteImport } from './routes/_loja/carrinho'
 import { Route as LojaEmBreveRouteImport } from './routes/_loja/em-breve'
 import { Route as LojaEntrarRouteImport } from './routes/_loja/entrar'
-import { Route as LojaFavoritosRouteImport } from './routes/_loja/favoritos'
-import { Route as LojaPerfilRouteImport } from './routes/_loja/perfil'
 import { Route as DevComponentesRouteImport } from './routes/dev.componentes'
+import { Route as LojaPrivadoFavoritosRouteImport } from './routes/_loja/_privado/favoritos'
+import { Route as LojaPrivadoPerfilRouteImport } from './routes/_loja/_privado/perfil'
 
 const LojaRoute = LojaRouteImport.update({
   id: '/_loja',
@@ -26,6 +27,10 @@ const LojaRoute = LojaRouteImport.update({
 const LojaIndexRoute = LojaIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LojaRoute,
+} as any)
+const LojaPrivadoRoute = LojaPrivadoRouteImport.update({
+  id: '/_privado',
   getParentRoute: () => LojaRoute,
 } as any)
 const LojaCadastroRoute = LojaCadastroRouteImport.update({
@@ -48,20 +53,20 @@ const LojaEntrarRoute = LojaEntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => LojaRoute,
 } as any)
-const LojaFavoritosRoute = LojaFavoritosRouteImport.update({
-  id: '/favoritos',
-  path: '/favoritos',
-  getParentRoute: () => LojaRoute,
-} as any)
-const LojaPerfilRoute = LojaPerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => LojaRoute,
-} as any)
 const DevComponentesRoute = DevComponentesRouteImport.update({
   id: '/dev/componentes',
   path: '/dev/componentes',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LojaPrivadoFavoritosRoute = LojaPrivadoFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => LojaPrivadoRoute,
+} as any)
+const LojaPrivadoPerfilRoute = LojaPrivadoPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => LojaPrivadoRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -70,31 +75,32 @@ export interface FileRoutesByFullPath {
   '/carrinho': typeof LojaCarrinhoRoute
   '/em-breve': typeof LojaEmBreveRoute
   '/entrar': typeof LojaEntrarRoute
-  '/favoritos': typeof LojaFavoritosRoute
-  '/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
+  '/favoritos': typeof LojaPrivadoFavoritosRoute
+  '/perfil': typeof LojaPrivadoPerfilRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof LojaIndexRoute
   '/cadastro': typeof LojaCadastroRoute
   '/carrinho': typeof LojaCarrinhoRoute
   '/em-breve': typeof LojaEmBreveRoute
   '/entrar': typeof LojaEntrarRoute
-  '/favoritos': typeof LojaFavoritosRoute
-  '/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
-  '/': typeof LojaIndexRoute
+  '/favoritos': typeof LojaPrivadoFavoritosRoute
+  '/perfil': typeof LojaPrivadoPerfilRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_loja': typeof LojaRouteWithChildren
+  '/_loja/_privado': typeof LojaPrivadoRouteWithChildren
   '/_loja/cadastro': typeof LojaCadastroRoute
   '/_loja/carrinho': typeof LojaCarrinhoRoute
   '/_loja/em-breve': typeof LojaEmBreveRoute
   '/_loja/entrar': typeof LojaEntrarRoute
-  '/_loja/favoritos': typeof LojaFavoritosRoute
-  '/_loja/perfil': typeof LojaPerfilRoute
   '/dev/componentes': typeof DevComponentesRoute
   '/_loja/': typeof LojaIndexRoute
+  '/_loja/_privado/favoritos': typeof LojaPrivadoFavoritosRoute
+  '/_loja/_privado/perfil': typeof LojaPrivadoPerfilRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,30 +110,31 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/em-breve'
     | '/entrar'
+    | '/dev/componentes'
     | '/favoritos'
     | '/perfil'
-    | '/dev/componentes'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/cadastro'
     | '/carrinho'
     | '/em-breve'
     | '/entrar'
+    | '/dev/componentes'
     | '/favoritos'
     | '/perfil'
-    | '/dev/componentes'
-    | '/'
   id:
     | '__root__'
     | '/_loja'
+    | '/_loja/_privado'
     | '/_loja/cadastro'
     | '/_loja/carrinho'
     | '/_loja/em-breve'
     | '/_loja/entrar'
-    | '/_loja/favoritos'
-    | '/_loja/perfil'
     | '/dev/componentes'
     | '/_loja/'
+    | '/_loja/_privado/favoritos'
+    | '/_loja/_privado/perfil'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -149,6 +156,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LojaIndexRouteImport
+      parentRoute: typeof LojaRoute
+    }
+    '/_loja/_privado': {
+      id: '/_loja/_privado'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof LojaPrivadoRouteImport
       parentRoute: typeof LojaRoute
     }
     '/_loja/cadastro': {
@@ -179,20 +193,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LojaEntrarRouteImport
       parentRoute: typeof LojaRoute
     }
-    '/_loja/favoritos': {
-      id: '/_loja/favoritos'
-      path: '/favoritos'
-      fullPath: '/favoritos'
-      preLoaderRoute: typeof LojaFavoritosRouteImport
-      parentRoute: typeof LojaRoute
-    }
-    '/_loja/perfil': {
-      id: '/_loja/perfil'
-      path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof LojaPerfilRouteImport
-      parentRoute: typeof LojaRoute
-    }
     '/dev/componentes': {
       id: '/dev/componentes'
       path: '/dev/componentes'
@@ -200,26 +200,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevComponentesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_loja/_privado/favoritos': {
+      id: '/_loja/_privado/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof LojaPrivadoFavoritosRouteImport
+      parentRoute: typeof LojaPrivadoRoute
+    }
+    '/_loja/_privado/perfil': {
+      id: '/_loja/_privado/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof LojaPrivadoPerfilRouteImport
+      parentRoute: typeof LojaPrivadoRoute
+    }
   }
 }
 
+interface LojaPrivadoRouteChildren {
+  LojaPrivadoFavoritosRoute: typeof LojaPrivadoFavoritosRoute
+  LojaPrivadoPerfilRoute: typeof LojaPrivadoPerfilRoute
+}
+
+const LojaPrivadoRouteChildren: LojaPrivadoRouteChildren = {
+  LojaPrivadoFavoritosRoute: LojaPrivadoFavoritosRoute,
+  LojaPrivadoPerfilRoute: LojaPrivadoPerfilRoute,
+}
+
+const LojaPrivadoRouteWithChildren = LojaPrivadoRoute._addFileChildren(
+  LojaPrivadoRouteChildren,
+)
+
 interface LojaRouteChildren {
+  LojaPrivadoRoute: typeof LojaPrivadoRouteWithChildren
   LojaCadastroRoute: typeof LojaCadastroRoute
   LojaCarrinhoRoute: typeof LojaCarrinhoRoute
   LojaEmBreveRoute: typeof LojaEmBreveRoute
   LojaEntrarRoute: typeof LojaEntrarRoute
-  LojaFavoritosRoute: typeof LojaFavoritosRoute
-  LojaPerfilRoute: typeof LojaPerfilRoute
   LojaIndexRoute: typeof LojaIndexRoute
 }
 
 const LojaRouteChildren: LojaRouteChildren = {
+  LojaPrivadoRoute: LojaPrivadoRouteWithChildren,
   LojaCadastroRoute: LojaCadastroRoute,
   LojaCarrinhoRoute: LojaCarrinhoRoute,
   LojaEmBreveRoute: LojaEmBreveRoute,
   LojaEntrarRoute: LojaEntrarRoute,
-  LojaFavoritosRoute: LojaFavoritosRoute,
-  LojaPerfilRoute: LojaPerfilRoute,
   LojaIndexRoute: LojaIndexRoute,
 }
 

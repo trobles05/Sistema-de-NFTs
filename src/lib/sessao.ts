@@ -49,7 +49,14 @@ export function limparSessao() {
   notificar(null)
 }
 
-/** Avisa a cada login, logout ou limpeza por sessão inválida. Devolve a função que cancela. */
+// Login/logout em outra aba chega pelo evento "storage": avisa os ouvintes desta aba também.
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (evento) => {
+    if (evento.key === CHAVE_SESSAO || evento.key === null) notificar(obterSessao())
+  })
+}
+
+/** Avisa a cada login, logout ou limpeza por sessão inválida (nesta ou em outra aba). Devolve a função que cancela. */
 export function assinarSessao(ouvinte: (sessao: SessaoLocal | null) => void): () => void {
   ouvintes.add(ouvinte)
   return () => ouvintes.delete(ouvinte)
