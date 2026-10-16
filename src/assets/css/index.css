@@ -12,6 +12,9 @@
   --color-fundo: var(--cor-fundo);
   --color-superficie: var(--cor-superficie);
   --color-superficie-escura: var(--cor-superficie-escura);
+  --color-superficie-elevada: var(--cor-superficie-elevada);
+  --color-coral: var(--cor-coral);
+  --color-sucesso: var(--cor-sucesso);
   --color-fundo-claro: var(--cor-fundo-claro);
   --color-borda: var(--cor-borda);
   --color-borda-suave: var(--cor-borda-suave);
@@ -40,6 +43,7 @@
   --color-border: var(--cor-borda);
   --color-input: var(--cor-borda);
   --color-ring: var(--cor-destaque);
+  --color-destructive: var(--cor-coral);
 
   --text-f9: var(--f9);
   --text-f10: var(--f10);
@@ -50,8 +54,16 @@
   --text-f16: var(--f16);
   --text-f17: var(--f17);
   --text-f18: var(--f18);
+  --text-f20: var(--f20);
+  --text-f22: var(--f22);
   --text-f24: var(--f24);
+  --text-f32: var(--f32);
   --text-f43: var(--f43);
+
+  --radius-campo: var(--raio-campo);
+  --radius-campo-mobile: var(--raio-campo-mobile);
+  --radius-cabecalho: var(--raio-cabecalho);
+  --radius-social: var(--raio-social);
 
   --font-weight-regular: var(--regular);
   --font-weight-medium: var(--medium);
