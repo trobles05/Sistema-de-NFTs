@@ -26,10 +26,12 @@ export function criarEstadoCenario(opcoes: { armazenamento?: Armazenamento } = {
   const storage = () => (armazenamento ??= armazenamentoPadrao())
   let cenario: Cenario | null = null
   let contadores = new Map<string, number>()
+  let consumidos = new Set<string>()
   let sorteio = criarSorteio(SEMENTE_LATENCIA)
 
   function reiniciarContadores() {
     contadores = new Map()
+    consumidos = new Set()
     sorteio = criarSorteio(SEMENTE_LATENCIA)
   }
 
@@ -62,6 +64,13 @@ export function criarEstadoCenario(opcoes: { armazenamento?: Armazenamento } = {
     cenarioAtual,
     definirCenario,
     reiniciarContadores,
+
+    /** `true` só na primeira vez que a chave é consumida desde a última troca ou reset de cenário. */
+    consumirUmaVez(chave: string): boolean {
+      if (consumidos.has(chave)) return false
+      consumidos.add(chave)
+      return true
+    },
 
     /** Lê `?cenario=<nome>` e `?reset-mocks` da URL. Quem chama decide o que fazer com `resetar`. */
     selecionarPelaUrl(url: URL): { cenario: Cenario; resetar: boolean } {
