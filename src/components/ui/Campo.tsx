@@ -14,6 +14,8 @@ export interface PropsControle {
 interface CampoProps {
   rotulo: ReactNode
   obrigatorio?: boolean
+  /** O Figma de login/cadastro só mostra placeholder: o rótulo existe para leitor de tela, sem aparecer. */
+  rotuloOculto?: boolean
   descricao?: ReactNode
   /** Mensagem de erro (da validação local ou dos `campos` do ErroHttp). */
   erro?: string
@@ -25,7 +27,7 @@ interface CampoProps {
  * Rótulo + controle + descrição + erro, já associados por id/aria.
  * O erro aparece com ícone e texto, nunca só pela cor da borda.
  */
-export function Campo({ rotulo, obrigatorio, descricao, erro, className, children }: CampoProps) {
+export function Campo({ rotulo, obrigatorio, rotuloOculto, descricao, erro, className, children }: CampoProps) {
   const id = useId()
   const idDescricao = descricao ? `${id}-descricao` : undefined
   const idErro = erro ? `${id}-erro` : undefined
@@ -33,7 +35,7 @@ export function Campo({ rotulo, obrigatorio, descricao, erro, className, childre
 
   return (
     <div className={cn('flex flex-col gap-2.5', className)}>
-      <Rotulo htmlFor={id} obrigatorio={obrigatorio}>
+      <Rotulo htmlFor={id} obrigatorio={obrigatorio} className={rotuloOculto ? 'sr-only' : undefined}>
         {rotulo}
       </Rotulo>
       {children({ id, 'aria-invalid': Boolean(erro), 'aria-describedby': descritores, 'aria-required': obrigatorio || undefined })}

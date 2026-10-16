@@ -34,7 +34,7 @@ export const AlterarSenhaEntradaSchema = z
   .object({
     senhaAtual: z.string().min(1, 'Informe a senha atual'),
     novaSenha: SenhaSchema,
-    confirmarNovaSenha: z.string(),
+    confirmarNovaSenha: z.string().min(1, 'Confirme a nova senha'),
   })
   .refine((d) => d.novaSenha === d.confirmarNovaSenha, {
     message: 'As senhas não conferem',

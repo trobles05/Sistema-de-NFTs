@@ -24,7 +24,9 @@ function LayoutLoja() {
       <main id="conteudo" tabIndex={-1} className="flex-1 focus:outline-none">
         <Outlet />
       </main>
-      <Rodape />
+      <div className={dados.telaCheiaMobile ? 'hidden md:block' : undefined}>
+        <Rodape />
+      </div>
       {dados.barraAbas && <BarraAbas className="md:hidden" />}
     </div>
   )
