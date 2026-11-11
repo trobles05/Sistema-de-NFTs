@@ -10,6 +10,7 @@ import {
   type Rede,
 } from '@/types'
 import { POR_PAGINA_CATALOGO } from '@/lib/catalogo'
+import { edicaoPadraoDe } from '@/lib/edicoes'
 import { compararEth } from '@/utils/eth'
 
 export const POR_PAGINA = POR_PAGINA_CATALOGO
@@ -17,11 +18,8 @@ export const POR_PAGINA = POR_PAGINA_CATALOGO
 export const QUANTIDADE_LANCAMENTOS = 12
 export const QUANTIDADE_DESTAQUES = 3
 
-/** Edição exibida no card: a mais barata com estoque; se todas esgotaram, a mais barata. */
-export function edicaoPadrao(nft: Nft): Edicao {
-  const porPreco = [...nft.edicoes].sort((a, b) => compararEth(a.preco, b.preco))
-  return porPreco.find((edicao) => edicao.disponivel > 0) ?? porPreco[0]!
-}
+/** Edição exibida no card (regra única, compartilhada com a tela de detalhe). */
+export const edicaoPadrao = (nft: Nft): Edicao => edicaoPadraoDe(nft)
 
 export function paraResumo(nft: Nft): NftResumo {
   const edicao = edicaoPadrao(nft)

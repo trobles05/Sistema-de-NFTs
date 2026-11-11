@@ -7,8 +7,9 @@ export { criarArmazenamentoMemoria, type Armazenamento } from '@/lib/armazenamen
 /**
  * Mudar o formato do estado ou as fixtures exige subir esta versão: dados salvos de outra versão voltam às fixtures.
  * v2: raridade dos 9 NFTs do Figma igual ao Figma (T-015).
+ * v3: avaliação e atributos do Emerald Ape iguais ao Figma (T-017).
  */
-export const VERSAO_ESQUEMA = 2
+export const VERSAO_ESQUEMA = 3
 export const CHAVE_ARMAZENAMENTO = `kurio:mock-db:v${VERSAO_ESQUEMA}`
 
 export interface ItemCarrinhoRegistro {

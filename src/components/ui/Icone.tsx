@@ -18,6 +18,14 @@ import sair from '@/assets/icons/iconly/sair.svg'
 import setaBaixo from '@/assets/icons/iconly/seta-baixo.svg'
 import usuarioCheio from '@/assets/icons/iconly/usuario-cheio.svg'
 import usuario from '@/assets/icons/iconly/usuario.svg'
+import coracaoContorno from '@/assets/icons/iconly/coracao-contorno.svg'
+import email from '@/assets/icons/iconly/email.svg'
+import estrela from '@/assets/icons/iconly/estrela.svg'
+import linkedin from '@/assets/icons/iconly/linkedin.svg'
+import mais from '@/assets/icons/iconly/mais.svg'
+import menos from '@/assets/icons/iconly/menos.svg'
+import voltar from '@/assets/icons/iconly/voltar.svg'
+import xTwitter from '@/assets/icons/iconly/x-twitter.svg'
 import { cn } from '@/lib/utils'
 
 /**
@@ -43,6 +51,14 @@ const ICONES = {
   sair: { src: sair, escala: 0.82 },
   'seta-baixo': { src: setaBaixo, escala: 1 },
   usuario: { src: usuario, escala: 1 },
+  'coracao-contorno': { src: coracaoContorno, escala: 1 },
+  email: { src: email, escala: 0.83 },
+  estrela: { src: estrela, escala: 0.83 },
+  linkedin: { src: linkedin, escala: 0.83 },
+  mais: { src: mais, escala: 1 },
+  menos: { src: menos, escala: 1 },
+  voltar: { src: voltar, escala: 0.66 },
+  'x-twitter': { src: xTwitter, escala: 0.89 },
   'usuario-cheio': { src: usuarioCheio, escala: 0.83 },
 } as const
 

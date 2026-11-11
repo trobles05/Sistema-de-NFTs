@@ -1,15 +1,37 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, type SearchSchemaInput } from '@tanstack/react-router'
+import { z } from 'zod'
+import { PaginaDetalheNft } from '@/components/nft/PaginaDetalheNft'
 
-/** Provisória: a tela de detalhe do NFT chega na T-017. */
-export const Route = createFileRoute('/_loja/nft/$id')({
-  staticData: { secao: 'mercado', divisor: false, barraAbas: false },
-  component: function DetalheProvisorio() {
-    const { id } = Route.useParams()
-    return (
-      <section className="mx-auto flex max-w-[600px] flex-col items-center gap-3 px-4 py-24 text-center">
-        <h1 className="text-f24 font-bold">Detalhes do NFT</h1>
-        <p className="text-f14 text-texto-secundario">{id} · Tela em construção.</p>
-      </section>
-    )
-  },
+/** Edição escolhida e quantidade ficam na URL: link compartilhável e refresh mantêm a seleção. */
+const BuscaDetalheSchema = z.object({
+  edicao: z.string().max(80).optional().catch(undefined),
+  quantidade: z.coerce.number().int().min(1).max(999).optional().catch(undefined),
 })
+
+export const Route = createFileRoute('/_loja/nft/$id')({
+  validateSearch: (bruto: z.input<typeof BuscaDetalheSchema> & SearchSchemaInput) => BuscaDetalheSchema.parse(bruto),
+  staticData: { secao: 'mercado', divisor: false, barraAbas: false, telaCheiaMobile: true },
+  component: Detalhe,
+})
+
+function Detalhe() {
+  const { id } = Route.useParams()
+  const { edicao, quantidade } = Route.useSearch()
+  const navigate = useNavigate({ from: '/nft/$id' })
+
+  return (
+    <PaginaDetalheNft
+      id={id}
+      edicaoId={edicao}
+      quantidade={quantidade ?? 1}
+      aoMudar={(mudanca) =>
+        void navigate({
+          // Trocar de edição volta a quantidade para 1; ajustar a quantidade não cria passo no histórico.
+          search: (anterior) => ({ ...anterior, ...mudanca, ...(mudanca.edicao ? { quantidade: undefined } : {}) }),
+          replace: mudanca.quantidade !== undefined,
+          resetScroll: false,
+        })
+      }
+    />
+  )
+}

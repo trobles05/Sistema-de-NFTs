@@ -18,6 +18,7 @@
 
   /* Degradês (medidos nos prints do Figma) */
   --degrade-primaria: linear-gradient(135deg, #865832 0%, #d28a4c 100%); /* botão de filtro da Início mobile */
+  --degrade-botao: linear-gradient(90deg, #d28a4c 0%, #b77843 100%); /* botões grandes do mobile (Comprar NFT, Conectar e finalizar) */
 
   /* Estados */
   --cor-coral: #f0805f; /* asterisco de obrigatório e mensagens de erro */
